@@ -12,6 +12,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use RecruitisApi\ApiException;
 use RecruitisApi\Configuration;
 use RecruitisApi\Model\Job;
 
@@ -535,4 +536,37 @@ final class GetAllJobsTest extends TestCase
             }
         }';
     }
+    
+    public function testWith400Response(): void
+    {
+        $mock = new MockHandler([
+            new Response(400, ['Content-Type' => 'application/problem+json'], $this->getRawError400Response())
+        ]);
+
+        $jobsModule = new Jobs(
+            (new Configuration()),
+            new Client(['handler' => HandlerStack::create($mock)])
+        );
+
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionCode(400);
+        $this->expectExceptionMessage('Bad Request');
+
+        $jobsModule->getAllJobs();
+    }
+    
+    private function getRawError400Response() : string {
+        return '{
+            "payload": null,
+            "meta": {
+                "duration": 60,
+                "total_duration": 150,
+                "code": "api.error.generic",
+                "message": "Cannot be done."
+            }
+        }';
+    }
+
+
 }
