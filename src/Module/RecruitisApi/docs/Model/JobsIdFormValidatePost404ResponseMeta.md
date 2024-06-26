@@ -1,0 +1,11 @@
+# # JobsIdFormValidatePost404ResponseMeta
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**duration** | **int** |  | [optional]
+**code** | **string** |  | [optional]
+**message** | **string** | Bližší popis chyby. | [optional]
+
+[[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)
