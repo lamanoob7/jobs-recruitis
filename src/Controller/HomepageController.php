@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Module\Recruitis\Jobs;
+use App\Module\Cacher\Jobs as CacherJobs;
 use RecruitisApi\Configuration;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,10 +13,9 @@ class HomepageController extends AbstractController
     public function index(): Response
     {
         $conf = (new Configuration())->setAccessToken($this->getParameter('recruitis.api.token'));
-
-        $jobs = new Jobs($conf);
-        $jobsList = $jobs->getAllJobs();
-        return $this->render('homepage/index.html.twig', ['jobs' => $jobsList]);
+        $cache = new CacherJobs($conf);
+        $jobs = $cache->getJobs();
+        return $this->render('homepage/index.html.twig', ['jobs' => $jobs]);
     }
 
     #[Route('/job/{id}', name: "job-detail")]
@@ -24,8 +23,8 @@ class HomepageController extends AbstractController
     {
         $conf = (new Configuration())->setAccessToken($this->getParameter('recruitis.api.token'));
 
-        $jobs = new Jobs($conf);
-        $job = $jobs->getJob($id);
+        $cache = new CacherJobs($conf);
+        $job = $cache->getJob($id);
         return $this->render('homepage/job.html.twig', ['job' => $job]);
     }
 }
