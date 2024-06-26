@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <h1> There was error during API call, please try it again later. </h1>
+        <div class="col-md-12">
+            Status: {{ exception.getCode }}
+            Message: {{ exception.getMessage }}
+        </div>
+    </div>
+</div>
+{% endblock %}
