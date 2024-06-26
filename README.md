@@ -12,18 +12,25 @@ Acceptance job task in PDF file.
 
 Using Symfony and Composer install `symfony/skeleton` and running local server using Symfony's `symfony server:start` command set up to PHP 8.1 vie `.php-version` file.
 
+Access token inserted into non Git `.env.local` 
+
 ### OpenApi
+
+API files created using openapi generator to save time and have whole API prepared.
+
+I used my own templates for generator whish should be better for static analysis using PHPStan (not used in this project).
 
 ```bash
 docker run --rm \
     -v "${PWD}:/local" openapitools/openapi-generator-cli generate \
     -i /local/docs/openapi.yaml \
     -g php \
-    -o /local/recruitisApi \
+    -o /local/recruitisApi \    
+    -t /local/dev/custom_templates \
     --invoker-package "RecruitisApi"
 ```
 
-#### Fixy
+#### Fixes
 
 Small fixes in openapi file, because found error during openapi generation.
 
