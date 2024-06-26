@@ -21,7 +21,7 @@ class Jobs {
     /** @return Job[] */
     public function getAllJobs() : array {
         $api = new JobsApi(...$this->getApiParameters());
-        $jobsPayload = $api->jobsGet();
+        $jobsPayload = $api->jobsGet(50);
         return $jobsPayload->getPayload();
     }
 
